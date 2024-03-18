@@ -27,8 +27,8 @@ app.post('/bfhl' , async (req , res)=>{
      const odd = [];
      const alphabets  = [];
      const even = [];
-     
- 
+     let response; 
+
      res.status(201).json({message:data});
 
      for(const item of data){
@@ -45,7 +45,7 @@ app.post('/bfhl' , async (req , res)=>{
      }  
 
 
-     const response = {
+     response = {
        "is_success": true,
        "user_id": user_id,
        "email":emailId,
@@ -56,13 +56,12 @@ app.post('/bfhl' , async (req , res)=>{
      } 
        res.json(response);
 
-     
+
    }catch(error){
      res.status(501).json({message:"An error has occured!" , errorMsg:error});
    } 
 }
 );
-
 app.listen(3000, () => {
   console.log('Express server working');
 });
