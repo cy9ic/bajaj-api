@@ -1,67 +1,55 @@
-import express from 'express';
-
+const express = require('express');
 const app = express();
+const port = process.env.PORT || 3000; // Use environment variable for port
 
-app.get('/', async (req, res) => {
-  try{
-    res.send('Hello World!');
-  }catch(error){
-    res.status(401).json({error:error})
+
+const userId = "Harkaran_Singh_2110991709";
+const email = "harkaran1709.be21@chitkara.edu.in";
+const rollNumber = "2110991709";
+
+app.post('/bfhl', (req, res) => {
+  try {
+    const data = req.body.data;
+
+    if (!data || !Array.isArray(data)) {
+      throw new Error('Invalid request: data is missing or not an array');
+    }
+
+    const evenNumbers = [];
+    const oddNumbers = [];
+    const alphabets = [];
+
+    for (const item of data) {
+      if (typeof item === 'string') {
+        alphabets.push(item.toUpperCase());
+      } else if (typeof item === 'number') {
+        if (item % 2 === 0) {
+          evenNumbers.push(item);
+        } else {
+          oddNumbers.push(item);
+        }
+      } else {
+        throw new Error('Invalid data type in array');
+      }
+    }
+
+    const response = {
+      is_success: true,
+      user_id: userId,
+      email: email,
+      roll_number: rollNumber,
+      odd_numbers: oddNumbers,
+      even_numbers: evenNumbers,
+      alphabets: alphabets,
+    };
+
+    res.json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ is_success: false, error: error.message });
   }
 });
 
-const emailId = "harkara1709.be21@chitkara.edu.in";
-const roll = "2110991709";
-const even = [];
-const user_id = "Harkaran_Singh_19102003";
-const odd = [];
-const alphabets  = [];
-
-
-app.post('/bfhl' , async (req , res)=>{
-  const data = req.body.data;
-   try{
-     if(!data){
-       return res.status(404).json({ message: 'Data not found!' });
-     }
-     const odd = [];
-     const alphabets  = [];
-     const even = [];
-     let response; 
-
-     res.status(201).json({message:data});
-
-     for(const item of data){
-       if(typeof Number(item) == "number"){
-         const num = Number(item);
-         if(num % 2 == 0){
-           even.push(num);
-         }else{
-           odd.push(num);
-         }
-       }else{
-         alphabets.push(item);
-       }
-     }  
-
-
- response = {
-        "is_success": true,
-        "user_id": user_id,
-        "email":emailId,
-        "roll_number":roll,
-        "odd_numbers": odd,
-        "even_numbers": even,
-        "alphabets": alphabets
-      }
-       res.status(200).json(response);
-
-
-   }catch(error){
-     res.status(501).json({message:"An error has occured!" , errorMsg:error});
-   } 
-}
-);
-app.listen(3000, () => {
-  console.log('Express server working 1');
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
