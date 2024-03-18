@@ -18,7 +18,7 @@ const odd = [];
 const alphabets  = [];
 
 
-app.post('/bfhl' , async (req , res)=>{
+app.post('/bfhh' , async (req , res)=>{
   const data = req.body.data;
    try{
      if(!data){
@@ -30,7 +30,6 @@ app.post('/bfhl' , async (req , res)=>{
      
  
      res.status(201).json({message:data});
-
 
      for(const item of data){
        if(typeof Number(item) == "number"){
@@ -62,7 +61,7 @@ app.post('/bfhl' , async (req , res)=>{
      res.status(501).json({message:"An error has occured!" , errorMsg:error});
    } 
 }
-)
+);
 
 app.listen(3000, () => {
   console.log('Express server working');
