@@ -1,42 +1,55 @@
 const express = require('express');
 const app = express();
-app.use(express.json());
+const port = process.env.PORT || 3000; // Use environment variable for port
+
+// Replace with your actual user ID and details (optional)
+const userId = "john_doe_17091999";
+const email = "john@xyz.com";
+const rollNumber = "ABCD123";
+
 app.post('/bfhl', (req, res) => {
-  const { data} = req.body;
-  const name="Harkaran";
-  const dob="19102003";
-  const email="harkarn1709.be21@chitkara.edu.in";
-  const roll_number="2110991709";
-  const userId = `${name}_${dob}`;
-  const is_success = true;
-  const evenNumbers = [];
-  const oddNumbers = [];
-  const alphabets = [];
-  for (let num of data) {
-    if (typeof num === 'number') {
-      if (num % 2 === 0) {
-        evenNumbers.push(num);
-      } else {
-        oddNumbers.push(num);
-      }
-    } else if (typeof num === 'string') {
-      alphabets.push(num.toUpperCase());
+  try {
+    const data = req.body.data;
+
+    if (!data || !Array.isArray(data)) {
+      throw new Error('Invalid request: data is missing or not an array');
     }
+
+    const evenNumbers = [];
+    const oddNumbers = [];
+    const alphabets = [];
+
+    for (const item of data) {
+      if (typeof item === 'string') {
+        alphabets.push(item.toUpperCase());
+      } else if (typeof item === 'number') {
+        if (item % 2 === 0) {
+          evenNumbers.push(item);
+        } else {
+          oddNumbers.push(item);
+        }
+      } else {
+        throw new Error('Invalid data type in array');
+      }
+    }
+
+    const response = {
+      is_success: true,
+      user_id: userId,
+      email: email,
+      roll_number: rollNumber,
+      odd_numbers: oddNumbers,
+      even_numbers: evenNumbers,
+      alphabets: alphabets,
+    };
+
+    res.json(response);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ is_success: false, error: error.message });
   }
-  const response = {
-    user_id: userId,
-    is_success :true,
-    email :email,
-    roll_number :roll_number,
-    even_numbers: evenNumbers,
-    odd_numbers: oddNumbers,
-    alphabets :alphabets
-  };
-  res.status(200).json(response);
 });
-app.get('/',(req,res)=>{
-  res.send("<h1>Hello World</h1>");
-})
-app.listen(3000,()=>{
-  console.log("server is running on port 3000");
+
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
