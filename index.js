@@ -18,7 +18,7 @@ const odd = [];
 const alphabets  = [];
 
 
-app.post('/bfhh' , async (req , res)=>{
+app.post('/bfhl' , async (req , res)=>{
   const data = req.body.data;
    try{
      if(!data){
