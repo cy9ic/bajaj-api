@@ -54,7 +54,7 @@ app.post('/bfhl' , async (req , res)=>{
         "even_numbers": even,
         "alphabets": alphabets
       }
-       res.json(response);
+       res.status(200).json(response);
 
 
    }catch(error){
