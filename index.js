@@ -25,12 +25,12 @@ app.post('/bfhl', (req, res) => {
   }
   const response = {
     user_id: userId,
-    is_success,
-    email,
-    roll_number,
+    is_success :true,
+    email :email,
+    roll_number :roll_number,
     even_numbers: evenNumbers,
     odd_numbers: oddNumbers,
-    alphabets
+    alphabets :alphabets
   };
   res.status(200).json(response);
 });
