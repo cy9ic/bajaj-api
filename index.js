@@ -19,15 +19,18 @@ const alphabets  = [];
 
 
 app.post('/bfhh' , async (req , res)=>{
+  const data = req.body.data;
    try{
+     if(!data){
+       return res.status(404).json({ message: 'Data not found!' });
+     }
      const odd = [];
      const alphabets  = [];
      const even = [];
      
-     const data = req.body.data;
-     if(!data){
-       return res.status(404).json({ message: 'Data not found!' });
-     }
+ 
+     res.status(201).json({message:data});
+
 
      for(const item of data){
        if(typeof Number(item) == "number"){
