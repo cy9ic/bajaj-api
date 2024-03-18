@@ -1,7 +1,13 @@
-const express = require('express');
-const app = express();
-const port = 3000; // Use environment variable for port
+import express from 'express';
 
+const app = express();
+
+app.get('/', async (req, res) => {
+  try{
+    res.send('Hello World!');
+  }catch(error){
+    res.status(401).json({error:error})
+  }
 
 const userId = "Harkaran_Singh_2110991709";
 const email = "harkaran1709.be21@chitkara.edu.in";
@@ -50,6 +56,6 @@ app.post('/bfhl', (req, res) => {
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server listening on port ${port}`);
+app.listen(3000, () => {
+  console.log('Express server working');
 });
